@@ -44,3 +44,8 @@ public void run(String account, String pw, int age){
 
    "^\\\d{2,3}-\\\d{3,4}-\\\d{4}\\$"
 
+## Custom Validation
+
+1. AssertTrue / False 와 같은 method 지정을 통해서 Custom logic 적용 가능
+2. ConstraintValidator 를 적용하여 재사용이 가능한 Custrom logic 적용 가능
+
