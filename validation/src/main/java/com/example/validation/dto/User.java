@@ -1,5 +1,7 @@
 package com.example.validation.dto;
 
+import com.example.validation.annotation.YearMonth;
+
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -18,7 +20,7 @@ public class User {
     private String phoneNumber;
 
 
-    @Size(min = 6, max =6)
+    @YearMonth
     private String reqYearMonth; // yyyyMM
 
     public String getName() {
@@ -61,15 +63,8 @@ public class User {
         this.reqYearMonth = reqYearMonth;
     }
 
-    @AssertTrue
-    public boolean isReqYearMonthValidation(){ // 반드시 함수명 앞에 is를 붙여주어야 함. 그렇지 않으면 작동하지 않음
-        try {
-            LocalDate localDate = LocalDate.parse(getReqYearMonth() + "01", DateTimeFormatter.ofPattern("yyyyMMdd"));
-        }catch (Exception e){
-            return false;
-        }
-        return true;
-    }
+    // 더이상 @AssertTrue 로 함수 만들어주지 않아도 됨!
+
     @Override
     public String toString() {
         return "User{" +
