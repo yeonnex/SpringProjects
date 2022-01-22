@@ -20,3 +20,11 @@
 5. AOP가 동작한다
 
 > Filter - Interceptor - AOP의 순으로 동작!
+
+## Interceptor
+
+> Interceptor란 Filter와 매우 유사한 형태로 존재하지만, 차이점은 **Spring Context 에 등록**된다.
+> AOP와 유사한 기능을 제공할 수 있으며, 주로 인증 단계를 처리하거나, Logging을 하는데에 사용한다.
+> 이를 선/후처리 함으로써, Service business logic과 분리시킨다.
+
+순수한 로깅을 할 때는 Filter에서, 인증단계처리는 Interceptor에서!
