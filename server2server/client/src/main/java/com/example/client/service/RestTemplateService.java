@@ -19,7 +19,7 @@ public class RestTemplateService {
         System.out.println(uri);
 
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class); // 서버로 요청하는 순간!
+        String result = restTemplate.getForObject(uri, String.class); // get 메서드를 사용하여 서버로 요청하는 순간!
 
         return result;
 
