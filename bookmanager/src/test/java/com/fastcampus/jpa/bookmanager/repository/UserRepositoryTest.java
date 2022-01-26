@@ -19,8 +19,17 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    @Transactional
     void crud(){
         userRepository.save(new User("david", "david@naver.com"));
+
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setEmail("martin-updated@naver.com");
+
+        userRepository.save(user);
+    }
+
+    @Test
+    void select(){
+        System.out.println(userRepository.findByName("martin"));
     }
 }
