@@ -3,7 +3,7 @@ package com.example.study.model;
 public class SearchParam {
     private String account;
     private String email;
-    private String page;
+    private int page;
 
     public String getAccount() {
         return account;
@@ -21,11 +21,11 @@ public class SearchParam {
         this.email = email;
     }
 
-    public String getPage() {
+    public int getPage() {
         return page;
     }
 
-    public void setPage(String page) {
+    public void setPage(int page) {
         this.page = page;
     }
 }
