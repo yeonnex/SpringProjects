@@ -20,6 +20,7 @@ public class GetController {
 
     @GetMapping("/betterMultiParameter")
     public SearchParam getBetterMultiParameter(SearchParam searchParam){
+        System.out.println(searchParam.getEmail());
         return searchParam; // 객체를 리턴하면 자동으로 json 형식으로 반환됨!
     }
 }
