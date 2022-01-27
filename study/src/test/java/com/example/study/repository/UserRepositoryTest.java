@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.study.StudyApplicationTests;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 public class UserRepositoryTest extends StudyApplicationTests {
 
@@ -26,9 +28,18 @@ public class UserRepositoryTest extends StudyApplicationTests {
         User newUser = userRepository.save(user);
         System.out.println("new User: " + newUser);
     }
-    public void read(){
 
+    @Test
+    public void read(){
+        List<User> list = userRepository.findAll();
+        Optional<User> user = userRepository.findById(2L);
+
+        user.ifPresent(selectUser -> {
+            System.out.println("user: " + selectUser);
+        });
+        System.out.println(list);
     }
+
     public void update(){
 
     }
