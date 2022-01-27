@@ -40,7 +40,16 @@ public class UserRepositoryTest extends StudyApplicationTests {
         System.out.println(list);
     }
 
+    @Test
     public void update(){
+        Optional<User> user = userRepository.findById(2L);
+        user.ifPresent(selectUser -> {
+            selectUser.setAccount("yeonnex");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("장서연");
+
+            userRepository.save(selectUser);
+        });
 
     }
     public void delete(){
