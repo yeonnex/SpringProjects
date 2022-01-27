@@ -5,6 +5,10 @@ import com.example.study.model.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.study.StudyApplicationTests;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +45,7 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional
     public void update(){
         Optional<User> user = userRepository.findById(2L);
         user.ifPresent(selectUser -> {
@@ -52,7 +57,21 @@ public class UserRepositoryTest extends StudyApplicationTests {
         });
 
     }
+
+    @Test
+    @Transactional
     public void delete(){
+        Optional<User> user = userRepository.findById(1L);
+
+        user.ifPresent(selectUser -> {
+            userRepository.delete(selectUser);
+        });
+        Optional<User> deletedUser = userRepository.findById(1L);
+        if(deletedUser.isPresent()){
+            System.out.println("삭제되지 않음. 데이터 존재" + deletedUser.get());
+        }else{
+            System.out.println("삭제됨. 데이터 없음");
+        }
 
     }
 }
