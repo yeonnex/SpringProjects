@@ -22,7 +22,7 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
         // orderDetail.setUserId(2L);
 
         // 어떤 상품?
-        orderDetail.setItemId(1L);
+        // orderDetail.setItemId(1L);
 
         // 저장!
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
