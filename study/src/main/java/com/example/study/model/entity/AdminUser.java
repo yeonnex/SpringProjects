@@ -5,16 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Data // 롬복! 생성자와 겟셋 메서드 자동생성~
-@Entity // ==table
-public class User {
-
+@AllArgsConstructor
+@Data
+@Entity
+public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,11 +24,15 @@ public class User {
 
     private String password;
 
-    private String status;
+    private String status; // 계정 상태
 
-    private String email;
+    private String role; // 계정 권한
 
-    private String phoneNumber;
+    private LocalDateTime lastLoginAt;
+
+    private LocalDateTime passwordUpdatedAt;
+
+    private int loginFailCount; // 기본은 0번 실패했다고 하기 위해 int로 설정
 
     private LocalDateTime registeredAt;
 
@@ -40,5 +45,4 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
-
 }

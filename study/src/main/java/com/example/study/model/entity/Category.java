@@ -5,33 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Data // 롬복! 생성자와 겟셋 메서드 자동생성~
-@Entity // ==table
-public class User {
-
+@AllArgsConstructor
+@Data
+@Entity
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String account;
+    private String type;
 
-    private String password;
-
-    private String status;
-
-    private String email;
-
-    private String phoneNumber;
-
-    private LocalDateTime registeredAt;
-
-    private LocalDateTime unregisteredAt;
+    private String title;
 
     private LocalDateTime createdAt;
 
