@@ -25,6 +25,8 @@ public class UserRepositoryTest extends StudyApplicationTests {
         User user = new User();
         // user.setId(); DB에서 Auto Increment 될 것이기 때문
         user.setAccount("TestUser03");
+        user.setPassword("1234");
+        user.setStatus("ADMIN");
         user.setEmail("TestUser03@gmail.com");
         user.setPhoneNumber("010-333-3333");
         user.setCreatedAt(LocalDateTime.now());
@@ -37,15 +39,6 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Test
     @Transactional
     public void read(){
-
-        Optional<User> user = userRepository.findByEmail("TestUser03");
-
-        user.ifPresent(selectUser -> {
-            selectUser.getOrderDetailList().stream().forEach(detail -> {
-                Item item = detail.getItem();
-                System.out.println(item);
-            });
-        });
 
     }
 
