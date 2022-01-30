@@ -23,7 +23,7 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
         orderDetail.setCreatedAt(LocalDateTime.now());
         orderDetail.setCreatedBy("ADMIN");
         orderDetail.setItemId(1L);
-        orderDetail.setOrderGroupId(1L);
+//        orderDetail.setOrderGroupId(1L);
     }
 
 }

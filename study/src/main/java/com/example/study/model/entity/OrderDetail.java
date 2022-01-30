@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity // order_detail 이라는 테이블에 자동적으로 연결됨! 자바는 camelCase, DB는 snake_case
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"orderGroup"})
 public class OrderDetail {
 
     @Id
@@ -38,5 +39,7 @@ public class OrderDetail {
 
     private Long itemId;
 
-    private Long orderGroupId;
+    // OrderDetail N : 1 OrderGroup
+    @ManyToOne
+    private OrderGroup orderGroup;
 }
