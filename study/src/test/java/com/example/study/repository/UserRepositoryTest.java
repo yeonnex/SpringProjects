@@ -25,13 +25,12 @@ public class UserRepositoryTest extends StudyApplicationTests {
         // String sql = "insert into user (%s, %s, %d) values (account, email, age);
         User user = new User();
         // user.setId(); DB에서 Auto Increment 될 것이기 때문
-        user.setAccount("TestUser03");
-        user.setPassword("1234");
+        user.setAccount("TestUser07");
+        user.setPassword("3366");
         user.setStatus("Registered");
         user.setEmail("TestUser09@gmail.com");
-        user.setPhoneNumber("010-999-9876");
-        user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy("admin");
+        user.setPhoneNumber("010-777-9876");
+
         User newUser = userRepository.save(user);
         System.out.println("new User: " + newUser);
     }
