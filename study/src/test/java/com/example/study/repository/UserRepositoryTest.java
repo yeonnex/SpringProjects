@@ -33,12 +33,20 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
         User newUser = userRepository.save(user);
         System.out.println("new User: " + newUser);
+
+        User u = User.builder()
+                .account("TestUser08")
+                .password("123321")
+                .status("Registered")
+                .email("TestUser09@gmail.com").build();
     }
 
     @Test
     @Transactional
     public void read(){
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-333-3333");
+        // 체이닝하여 값을 세팅할 수 있음 @Accessors(chain=true) 덕분!
+        user.setEmail("TestUser09@gmail.com").setStatus("Registered").setPhoneNumber("010-9999-0000");
 //        assertNotNull(user);
         if (user != null){
             user.getOrderGroupList().forEach(orderGroup -> {
