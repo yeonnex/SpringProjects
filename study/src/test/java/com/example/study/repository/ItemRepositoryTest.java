@@ -29,7 +29,7 @@ public class ItemRepositoryTest extends StudyApplicationTests {
         item.setRegisteredAt(registeredAt);
         item.setCreatedAt(createdAt);
         item.setCreatedBy(createdBy);
-        item.setPartnerId(1L);
+//        item.setPartnerId(1L);
         Item newItem = itemRepository.save(item);
         System.out.println(newItem);
     }
@@ -39,7 +39,7 @@ public class ItemRepositoryTest extends StudyApplicationTests {
         Long id = 3L;
         Optional<Item> item = itemRepository.findById(id);
         item.ifPresent(selectItem -> {
-            System.out.println(selectItem.getPartnerId());
+//            System.out.println(selectItem.getPartnerId());
         });
     }
 

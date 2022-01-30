@@ -2,9 +2,11 @@ package com.example.study.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.servlet.http.Part;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"orderDetailList", "partner"})
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL 이므로 이렇게 설정!
@@ -41,8 +44,13 @@ public class Item {
 
     private String updatedBy;
 
-    private Long partnerId;
+    // Item N : 1 Partner
+    @ManyToOne
+    private Partner partner;
 
+    // Item 1 : N OrderDetail
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    private List<OrderDetail> orderDetailList;
 
 
 

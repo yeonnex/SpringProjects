@@ -22,7 +22,7 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
         orderDetail.setTotalPrice(BigDecimal.valueOf(124000));
         orderDetail.setCreatedAt(LocalDateTime.now());
         orderDetail.setCreatedBy("ADMIN");
-        orderDetail.setItemId(1L);
+//        orderDetail.setItemId(1L);
 //        orderDetail.setOrderGroupId(1L);
     }
 
