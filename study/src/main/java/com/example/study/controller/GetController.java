@@ -2,6 +2,7 @@ package com.example.study.controller;
 
 
 import com.example.study.model.SearchParam;
+import com.example.study.model.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,5 +23,12 @@ public class GetController {
     public SearchParam getBetterMultiParameter(SearchParam searchParam){
         System.out.println(searchParam.getEmail());
         return searchParam; // 객체를 리턴하면 자동으로 json 형식으로 반환됨!
+    }
+
+    @GetMapping("/header")
+    public Header getHeader(){
+
+        // 객체 -> json (잭슨이 해줌) {"resultCode" : "OK", "description" : "OK"}
+        return Header.builder().resultCode("OK").description("OK").build();
     }
 }
