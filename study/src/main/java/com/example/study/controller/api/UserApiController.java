@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse> {
     @Override
     @PostMapping("") // /api/user
-    public Header<UserApiResponse> create(@RequestBody UserApiRequest userApiRequest) {
+    public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
         return null;
     }
 
@@ -24,7 +24,7 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 
     @Override
     @PutMapping("") // /api/user
-    public Header<UserApiResponse> update(@RequestBody UserApiRequest userApiRequest) {
+    public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> userApiRequest) {
         return null;
     }
 
