@@ -40,7 +40,7 @@ public class OrderGroup {
 
     private BigDecimal totalPrice;
 
-    private Integer totalQuantity;
+    private Long totalQuantity;
 
     private LocalDateTime orderAt;
 
