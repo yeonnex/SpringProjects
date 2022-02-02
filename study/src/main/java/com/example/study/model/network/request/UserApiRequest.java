@@ -1,11 +1,14 @@
 package com.example.study.model.network.request;
 
 
+import com.example.study.model.enumclass.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,7 +21,8 @@ public class UserApiRequest {
     private Long id;
     private String account;
     private String password; // 요청시 password 가 평문으로 들어오지만
-    private String status;
+
+    private UserStatus status;
     private String email;
     private String phoneNumber;
 

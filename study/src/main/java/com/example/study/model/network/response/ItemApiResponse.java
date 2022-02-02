@@ -1,6 +1,7 @@
 package com.example.study.model.network.response;
 
 
+import com.example.study.model.enumclass.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 public class ItemApiResponse {
     private Long id;
 
-    private String status;
+    private UserStatus status;
 
     private String name;
 
