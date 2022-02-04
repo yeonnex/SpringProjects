@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class MyController {
     // save 함수는 id를 전달했을 때 해당 id 에 대한 데이터가 없으면 insert 를 한다
     // 패스워드와 이메일만 수정가능하게
     @PutMapping("/temp/user/{id}")
+    @Transactional // 함수 종료시에 자동으로 commit 이 됨
     public User update(@PathVariable int id, @RequestBody User req){ // json 데이터 받기 위해 @RequestBody
         System.out.println("PUT 메서드!!!");
        User user = userRepository.findById(id).orElseThrow(()-> {
@@ -35,8 +37,21 @@ public class MyController {
        });
        user.setPassword(req.getPassword());
        user.setEmail(req.getEmail());
-       return userRepository.save(user);
+       // return userRepository.save(user);
+       // 변경감지 -> update 날림! 더티 체킹 (@Transactional)
+       // 앞으로 값 업데이트 시 더티체킹 방식으로 값을 수정할 것이다
+        return user;
+    }
 
+    @DeleteMapping("/temp/user/{id}")
+    public Optional<User> delete(@PathVariable int id){
+        Optional<User> user =  Optional.ofNullable(userRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("해당 사용자 삭제할 수 없음");
+        }));
+        user.ifPresent(selectedUser ->{
+            userRepository.delete(selectedUser);
+        });
+        return user;
     }
 
     @GetMapping("/temp/user/{id}")
