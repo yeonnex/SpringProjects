@@ -23,11 +23,8 @@ public class MyController {
 
     @GetMapping("/temp/user/{id}")
     public Optional<User> read(@PathVariable int id){
-        return Optional.ofNullable(userRepository.findById(id).orElseThrow(new Supplier<IllegalArgumentException>() {
-            @Override
-            public IllegalArgumentException get() {
-                return new IllegalArgumentException("해당 유저는 없습니다");
-            }
+        return Optional.ofNullable(userRepository.findById(id).orElseThrow(()->{
+            return new IllegalArgumentException("해당 사용자는 없음");
         }));
     }
 
