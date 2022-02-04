@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,6 +35,10 @@ public class Board {
     @JoinColumn(name = "userId") // 실제 DB에는 userId로 FK가 들어갈 것이다
     @ManyToOne // 한명의 유저는 여러개의 글을 쓸 수 있다
     private User user; // DB는 오브젝트를 저장할 수 없다. FK로 저장해야함. 자바는 오브젝트를 저장할 수 있다
+
+    @OneToMany(mappedBy = "board") // mappedBy 가 있다는 건, "난 FK가 아니예요!" 라는 뜻. 그러니 "DB에 reply 컬럼을 만들지 마세요!"
+    // 난 그냥 Board 를 select 할 때 join 문을 통해 데이터를 들고만 와주기 위해 필요한 겁니다.
+    private List<Reply> reply;
 
     @CreationTimestamp // insert 될때 자동으로
     private Timestamp createDate;
