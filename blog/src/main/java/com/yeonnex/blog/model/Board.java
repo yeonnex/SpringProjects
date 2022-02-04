@@ -1,12 +1,20 @@
 package com.yeonnex.blog.model;
 import com.yeonnex.blog.model.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Board {
     @Id
@@ -27,7 +35,7 @@ public class Board {
     @ManyToOne // 한명의 유저는 여러개의 글을 쓸 수 있다
     private User user; // DB는 오브젝트를 저장할 수 없다. FK로 저장해야함. 자바는 오브젝트를 저장할 수 있다
 
-   @CreationTimestamp // insert 될때 자동으로
+    @CreationTimestamp // insert 될때 자동으로
     private Timestamp createDate;
 
 }

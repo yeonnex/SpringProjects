@@ -1,6 +1,7 @@
 package com.yeonnex.blog.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,6 +13,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity // MySQL 에 자동으로 User 클래스 테이블이 생성된다
 public class User {
     @Id
