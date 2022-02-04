@@ -31,8 +31,9 @@ public class User {
     @Column(nullable = false, length = 50)
     private String email;
 
-    @ColumnDefault("'user'") // 작은따옴표로 한번더 감싸주어 문자열이라는 것을 알려주자자
-   private String role; // Enum 으로 나중에 수정하자 // admin, user, manager
+    // @ColumnDefault("'user'") // 작은따옴표로 한번더 감싸주어 문자열이라는 것을 알려주자자
+    @Enumerated(EnumType.STRING) // DB는 RoleType 이라는 타입이 없다
+    private RoleType role; // Enum 으로 나중에 수정하자 // admin, user, manager
 
     @CreationTimestamp // 시간이 자동 입력. 나중에 데이터 생성할 때 id 값처럼 굳이 넣지 않아도 자동생성 예정
     private Timestamp createDate;
