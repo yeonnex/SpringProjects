@@ -7,14 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 // html 파일이 아니라 data 를 리턴해주는 controller = RestController
 @RestController
@@ -25,6 +21,22 @@ public class MyController {
     @PostMapping("/temp/join")
     public User join(User user){
         return userRepository.save(user);
+    }
+
+    // save 함수는 id를 전달하지 않으면 insert 를 해주고,
+    // save 함수는 id를 전달했을 때 해당 id 에 대한 데이터가 있으면 update 를 해주고
+    // save 함수는 id를 전달했을 때 해당 id 에 대한 데이터가 없으면 insert 를 한다
+    // 패스워드와 이메일만 수정가능하게
+    @PutMapping("/temp/user/{id}")
+    public User update(@PathVariable int id, @RequestBody User req){ // json 데이터 받기 위해 @RequestBody
+        System.out.println("PUT 메서드!!!");
+       User user = userRepository.findById(id).orElseThrow(()-> {
+           return new IllegalArgumentException("수정할 수 없어요...");
+       });
+       user.setPassword(req.getPassword());
+       user.setEmail(req.getEmail());
+       return userRepository.save(user);
+
     }
 
     @GetMapping("/temp/user/{id}")
@@ -38,7 +50,7 @@ public class MyController {
    @GetMapping("/temp/user")
     public Page<User> pageList(@PageableDefault(size=2, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
         return userRepository.findAll(pageable);
-        // return userRepository.findAll(pageable).getContent();
+        // return userRepository.findAll(pageable).getContent(); -> 반환값 List 로 바꿔주기
     }
 
     @GetMapping("/temp/users")
