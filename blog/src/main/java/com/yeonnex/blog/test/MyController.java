@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 // html 파일이 아니라 data 를 리턴해주는 controller = RestController
+@ControllerAdvice
 @RestController
 public class MyController {
     @Autowired

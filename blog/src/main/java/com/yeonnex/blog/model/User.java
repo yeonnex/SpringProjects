@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 넘버링 전략. 프로젝트에서 연결된 DB 넘버링 전략을 따라가겠다
     private int id; // 오라클: 시퀀스, MySQL: auto_increment 전략
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String userName; // 아이디
 
     @Column(nullable = false, length = 100) // 123456 -> 해쉬(비밀번호 암호화 예정)
