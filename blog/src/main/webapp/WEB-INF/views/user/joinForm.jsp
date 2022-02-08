@@ -4,10 +4,10 @@
 <%--반드시 "상대경로" 를 적어주어야 한다--%>
 <%@ include file="../layout/header.jsp"%>
 <!-- 회원가입 폼 -->
-<form action="/action_page.php">
+<form>
     <div class="form-group">
         <label for="username">Username:</label>
-        <input type="email" class="form-control" placeholder="Enter username" id="username">
+        <input type="text" class="form-control" placeholder="Enter username" id="username">
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
@@ -17,10 +17,9 @@
         <label for="password">Password:</label>
         <input type="password" class="form-control" placeholder="Enter password" id="password">
     </div>
+
 </form>
+<button id="btn-save" class="btn btn-primary">회원가입완료</button>
 <!-- 회원가입 폼 끝 -->
+<script src="/blog/js/user.js"></script>
 <%@ include file="../layout/footer.jsp"%>
-
-
-
-
