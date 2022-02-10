@@ -21,5 +21,5 @@
 </form>
 <button id="btn-save" class="btn btn-primary">회원가입완료</button>
 <!-- 회원가입 폼 끝 -->
-<script src="/blog/js/user.js"></script>
+<script src="/js/user.js"></script>
 <%@ include file="../layout/footer.jsp"%>

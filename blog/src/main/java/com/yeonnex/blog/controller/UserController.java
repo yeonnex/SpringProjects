@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
-    @GetMapping("/user/joinForm")
+    @GetMapping("/joinForm")
     public String joinForm(){
         System.out.println("새로 JOIN 하고 싶어요!");
         return "user/joinForm";
     }
 
-    @GetMapping("/user/loginForm")
+    @GetMapping("/loginForm")
     public String loginForm(){
         return "user/loginForm";
     }

@@ -20,7 +20,7 @@ let index = {
        $.ajax({
             // 어떤 통신 수행(회원 가입 수행 요청)
            type: "POST",
-           url: "/blog/api/user",
+           url: "/api/user",
            data: JSON.stringify(data), // http body 데이터
            contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
            dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json 이라면) => javascript 오브젝트로 바꿔줌
@@ -29,7 +29,7 @@ let index = {
            alert("회원가입이 완료되었습니다");
            alert(resp);
            console.log(resp);
-           location.href = "/blog";
+           location.href = "/";
         }).fail(function (error){
             // 실패면 여기 실행
             alert("회원 가입에 실패하였습니다");
@@ -47,7 +47,7 @@ let index = {
         $.ajax({
             // 어떤 통신 수행(회원 가입 수행 요청)
             type: "POST",
-            url: "/blog/api/user/login",
+            url: "/api/user/login",
             data: JSON.stringify(data), // http body 데이터
             contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
             dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json 이라면) => javascript 오브젝트로 바꿔줌
@@ -56,7 +56,7 @@ let index = {
             alert("로그인이 완료되었습니다");
             alert(resp);
             console.log(resp);
-            location.href = "/blog";
+            location.href = "/";
         }).fail(function (error){
             // 실패면 여기 실행
             alert("회원 가입에 실패하였습니다");
