@@ -20,8 +20,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true) // Select 할 때 트렌잭션 시작. 서비스 종료시에 트랜잭션 종료(정합성 유지시킬 수 있음). 즉 여러번 select 하더라도 같은 데이터!
-   public User 로그인(User user){
-        return userRepository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
-    }
 }

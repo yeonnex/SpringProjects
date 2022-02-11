@@ -24,7 +24,7 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/api/user")
+    @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody HashMap<String, Object> param){
         System.out.println(param);
         String name = (String) param.get("username");
@@ -42,29 +42,5 @@ public class UserApiController {
         userService.회원가입(user);
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
-/*
-    @PostMapping("/api/user/login")
-    public ResponseDto<Integer> login(@RequestBody Map<String, String> param, HttpSession session){
-        System.out.println("===== USER PRINT =====");
-        String name = (String)param.get("username");
-        String password = (String)param.get("password");
-
-        User user = new User();
-        user.setUserName(name);
-        user.setPassword(password);
-
-        User principal = userService.로그인(user); // principal (접근주체)
-        System.out.println("principal 출력");
-        System.out.println(principal);
-
-        if(principal != null){
-            session.setAttribute("principal", principal); // 세션이 만들어짐!
-            System.out.println("세션이 생성됨");
-        }else{
-            return new ResponseDto<Integer>(HttpStatus.BAD_REQUEST, -1);
-        }
-        return new ResponseDto<Integer>(HttpStatus.OK, 1);
-    }
-
- */
+    // 전통적인 로그인 방식 사용하지 않고, 스프링 시큐리티를 사용할 것임
 }
