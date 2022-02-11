@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
     @GetMapping("/joinForm")
     public String joinForm(){
-        System.out.println("새로 JOIN 하고 싶어요!");
         return "user/joinForm";
     }
 

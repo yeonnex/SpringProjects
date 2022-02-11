@@ -24,9 +24,6 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HttpSession session;
-
     @PostMapping("/api/user")
     public ResponseDto<Integer> save(@RequestBody HashMap<String, Object> param){
         System.out.println(param);
@@ -45,9 +42,9 @@ public class UserApiController {
         userService.회원가입(user);
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
-
+/*
     @PostMapping("/api/user/login")
-    public ResponseDto<Integer> login(@RequestBody Map<String, String> param){
+    public ResponseDto<Integer> login(@RequestBody Map<String, String> param, HttpSession session){
         System.out.println("===== USER PRINT =====");
         String name = (String)param.get("username");
         String password = (String)param.get("password");
@@ -68,4 +65,6 @@ public class UserApiController {
         }
         return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
+
+ */
 }
