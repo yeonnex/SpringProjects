@@ -8,7 +8,6 @@ let index = {
 
     },
     save: function () {
-        alert("user.js의 save 함수 작동!!!");
         let data = {
             username: $("#username").val(),
             email: $("#email").val(),
@@ -31,7 +30,9 @@ let index = {
            location.href = "/";
         }).fail(function (error){
             // 실패면 여기 실행
-            alert("회원 가입에 실패하였습니다");
+           alert("에러 출력");
+           console.log(error);
+            alert("회원 가입에 실패!");
         }) // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청!!
     },
 
