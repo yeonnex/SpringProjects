@@ -5,7 +5,6 @@ let index = {
             this.save();
         });
 
-
     },
     save: function () {
         let data = {

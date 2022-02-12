@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class BoardService {
@@ -30,5 +31,10 @@ public class BoardService {
 
         boardRepository.save(board);
 
+    }
+
+    @Transactional
+    public List<Board> 글목록(){
+        return boardRepository.findAll();
     }
 }
