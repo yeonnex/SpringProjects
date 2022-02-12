@@ -48,12 +48,15 @@ public class PrincipalDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collectors = new ArrayList<>();
-        collectors.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return "ROLE_" + user.getRole(); // ex) ROLE_USER. 앞에 ROLE_ 이라는 prefix 를  꼭 붙여야 하는데, 스프링의 규칙임!
-            }
-        });
+
+//        collectors.add(new GrantedAuthority() {
+//            @Override
+//            public String getAuthority() {
+//                return "ROLE_" + user.getRole(); // ex) ROLE_USER. 앞에 ROLE_ 이라는 prefix 를  꼭 붙여야 하는데, 스프링의 규칙임!
+//            }
+//        });
+
+        collectors.add(()-> "ROLE_" + user.getRole());
         return collectors;
     }
 }
