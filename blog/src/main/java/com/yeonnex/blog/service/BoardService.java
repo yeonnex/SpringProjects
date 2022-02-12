@@ -33,17 +33,20 @@ public class BoardService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true) // select 만 하는거니까 readOnly=true 로!
     public Page<Board> 글목록(Pageable pageable){
         return boardRepository.findAll(pageable);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Board 글상세보기(int id){
-        System.out.println("============");
-        System.out.println(boardRepository.findById(id));
         return boardRepository.findById(id).orElseThrow(()->{
             return new IllegalArgumentException("글 상세보기 실패");
         });
+    }
+
+    @Transactional
+    public void 글삭제하기(int id){
+        boardRepository.deleteById(id);
     }
 }

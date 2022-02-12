@@ -1,5 +1,6 @@
 package com.yeonnex.blog.controller.api;
 
+import com.sun.media.jfxmediaimpl.HostUtils;
 import com.yeonnex.blog.config.auth.PrincipalDetail;
 import com.yeonnex.blog.dto.ResponseDto;
 import com.yeonnex.blog.model.Board;
@@ -8,10 +9,7 @@ import com.yeonnex.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +27,13 @@ public class BoardApiController {
         boardService.글쓰기(board,principal.getUser());
 
         return new ResponseDto<Integer>(HttpStatus.OK,1);
+    }
+
+    @DeleteMapping("/api/board/{id}")
+    public ResponseDto<Integer> delete(@PathVariable int id){
+        System.out.println("글 삭제 api 호출");
+        boardService.글삭제하기(id);
+        return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
 
     // /auth/joinProc 을 만들지 않은 이유는,

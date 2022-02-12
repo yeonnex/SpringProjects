@@ -4,18 +4,17 @@ let index = {
         $("#btn-save").on("click", () => { // function(){} X, ()=>{} this 를 바인딩하기 위해서!!
             this.save();
         });
+        $("#btn-delete").on("click", ()=>{
+            this.deleteById();
+        })
 
     },
     save: function () {
         let data = {
-            // username: $("#username").val(),
-            // email: $("#email").val(),
-            // password: $("#password").val()
             title: $("#title").val(),
             content: $("#content").val()
-
         }
-        console.log(data);
+
         // ajax 호출시 default 가 비동기 호출출
        $.ajax({
             // 어떤 통신 수행(회원 가입 수행 요청)
@@ -32,6 +31,26 @@ let index = {
             // 실패면 여기 실행
             alert("회원 가입에 실패!");
         }) // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청!!
+    },
+
+    deleteById: function (){
+
+        var id = document.getElementById("writeId");
+        alert(id.innerText + "번째 게시물 삭제!");
+        // 또는
+        // var id = $("#writeId").text();
+        $.ajax({
+            type: "DELETE",
+            url: "/api/board/" + id.innerText,
+            dataType: "json"
+        }).done(function (resp){
+            alert("삭제가 완료되었습니다");
+            location.href = "/";
+        }).fail(function (error){
+            // 실패면 여기 실행
+            alert("삭제 실패!");
+        })
+
     },
 
 }
