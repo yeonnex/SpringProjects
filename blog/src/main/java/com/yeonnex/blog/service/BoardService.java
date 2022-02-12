@@ -49,4 +49,15 @@ public class BoardService {
     public void 글삭제하기(int id){
         boardRepository.deleteById(id);
     }
+
+    @Transactional
+    public void 글수정하기(Board board, int id){
+        System.out.println("글수정하기 서비스 시작!");
+        Optional<Board> selectedBoard = boardRepository.findById(id);
+        selectedBoard.ifPresent((board1)->{
+            board1.setTitle(board.getTitle());
+            board1.setContent(board.getContent());
+            boardRepository.save(board1);
+        });
+    }
 }

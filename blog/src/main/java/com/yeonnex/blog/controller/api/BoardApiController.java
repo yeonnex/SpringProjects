@@ -7,6 +7,7 @@ import com.yeonnex.blog.model.Board;
 import com.yeonnex.blog.service.BoardService;
 import com.yeonnex.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.json.GsonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,14 @@ public class BoardApiController {
     @Autowired
     private BoardService boardService;
 
+    @PutMapping("/api/board/{id}")
+    public ResponseDto<Integer> update(@RequestBody Board board, @PathVariable int id){
+        System.out.println("글 수정하기 api 호출");
+        board.getTitle();
+        board.getContent();
+        boardService.글수정하기(board, id);
+        return new ResponseDto<Integer>(HttpStatus.OK,1);
+    }
     @PostMapping("/api/board")
     public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal){
 

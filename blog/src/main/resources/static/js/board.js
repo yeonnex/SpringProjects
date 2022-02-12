@@ -6,6 +6,9 @@ let index = {
         });
         $("#btn-delete").on("click", ()=>{
             this.deleteById();
+        });
+        $("#btn-update").on("click", ()=>{
+            this.updateById();
         })
 
     },
@@ -52,6 +55,33 @@ let index = {
         })
 
     },
+    updateById: function (){
+        var id = $("#updated-writeId").text();
+        alert(id);
+        let data = {
+            title: $("#updated-title").val(),
+            content: $("#updated-content").val()
+        }
+        alert("제목은!");
+        alert(data.title);
+        // ajax 호출시 default 가 비동기 호출
+        $.ajax({
+            // 어떤 통신 수행(회원 가입 수행 요청)
+            type: "PUT",
+            url: "/api/board/" + id,
+            data: JSON.stringify(data), // http body 데이터
+            contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
+            dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json 이라면) => javascript 오브젝트로 바꿔줌
+        }).done(function (resp) {
+            // 정상이면 여기 실행
+            alert("수정이 완료되었습니다");
+            location.href = "/";
+        }).fail(function (error){
+            // 실패면 여기 실행
+            alert("수정이 실패!");
+        })
+    }
+
 
 }
 index.init();
