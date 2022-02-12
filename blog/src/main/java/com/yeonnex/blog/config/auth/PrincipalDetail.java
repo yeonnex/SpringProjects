@@ -45,17 +45,12 @@ public class PrincipalDetail implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    // 계정이 갖고있는 권한 목록을 리턴한다. (권한이 여러개있을 수 있어서 for 문을 돌아야
+    // 하는데, 우리는 한개만.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collectors = new ArrayList<>();
-
-//        collectors.add(new GrantedAuthority() {
-//            @Override
-//            public String getAuthority() {
-//                return "ROLE_" + user.getRole(); // ex) ROLE_USER. 앞에 ROLE_ 이라는 prefix 를  꼭 붙여야 하는데, 스프링의 규칙임!
-//            }
-//        });
-
         collectors.add(()-> "ROLE_" + user.getRole());
         return collectors;
     }
