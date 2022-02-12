@@ -57,7 +57,8 @@ public class BoardService {
         selectedBoard.ifPresent((board1)->{
             board1.setTitle(board.getTitle());
             board1.setContent(board.getContent());
-            boardRepository.save(board1);
+            // 해당 함수 종료시(Service 가 종료될 때) 트랜잭션이 종료된다. 이때 더티체킹 - 자동 업데이트가 됨. db flush
+//            boardRepository.save(board1); 이거 안해줘도 됨
         });
     }
 }

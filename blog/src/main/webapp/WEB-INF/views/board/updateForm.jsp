@@ -7,14 +7,15 @@
 글번호: <span id="updated-writeId"><i>${board.id} </i></span>
 
 <form>
+<%--    <input type="hidden" id="updated-writeId" value="${board.id}"/>--%>
     <div class="form-group">
         <label for="updated-title">Title:</label>
-        <input type="text" class="form-control" placeholder="Enter username" id="updated-title">
+        <input value="${board.title}" type="text" class="form-control" placeholder="Enter username" id="updated-title">
     </div>
 
     <div class="form-group">
         <label for="updated-content">Content:</label>
-        <textarea class="form-control summernote" id="updated-content" cols="30" rows="5"></textarea>
+        <textarea class="form-control summernote" id="updated-content" cols="30" rows="5">${board.content}</textarea>
     </div>
 
     <script>
