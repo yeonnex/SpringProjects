@@ -33,13 +33,11 @@ public class UserApiController {
     }
 
     @PutMapping("/auth/updateProc")
-    public void update(@RequestBody User user){ // 이제 User 받을 수 있다!
+    public void update( @RequestBody User user ){ // 이제 User 받을 수 있다!
         System.out.println("==============");
         System.out.println(user.getUserName());
         System.out.println(user.getEmail());
 
     }
 
-    // /auth/joinProc 을 만들지 않은 이유는,
-    // 스프링 시큐리티가 이 요청을 가로채가게 하기 위해서이다
 }

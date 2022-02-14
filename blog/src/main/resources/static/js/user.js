@@ -13,7 +13,7 @@ let index = {
     },
     save: function () {
         let data = {
-            userName: $("#username").val(), // username X, userName O
+            userName: $("#username").val(), //  userName O, username X
             email: $("#email").val(),
             password: $("#password").val()
         }
