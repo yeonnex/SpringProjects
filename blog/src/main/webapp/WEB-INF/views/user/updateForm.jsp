@@ -6,13 +6,14 @@
 <!-- 회원수정 폼 -->
 
 <form>
+    <input type="hidden" id="id" value="${principal.user.id}">
     <div class="form-group">
         <label for="username">Username:</label>
-        <input type="text" class="form-control" placeholder="Enter username" id="username">
+        <input value= "${principal.user.userName}" type="text" class="form-control" placeholder="Enter username" id="username" readonly>
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" class="form-control" placeholder="Enter email" id="email">
+        <input value="${principal.user.email}" type="email" class="form-control" placeholder="Enter email" id="email">
     </div>
     <div class="form-group">
         <label for="password">Password:</label>

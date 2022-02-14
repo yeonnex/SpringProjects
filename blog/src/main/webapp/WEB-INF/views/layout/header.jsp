@@ -2,9 +2,11 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<%--현재 세션에 저장된 로그인한 객체가 principal로 저장되어있음. princial == auth/PrincipalDetail.java --%>
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal" />
 </sec:authorize>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

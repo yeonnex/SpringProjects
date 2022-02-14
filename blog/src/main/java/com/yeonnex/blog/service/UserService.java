@@ -1,6 +1,5 @@
 package com.yeonnex.blog.service;
 
-
 import com.yeonnex.blog.model.RoleType;
 import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.repository.UserRepository;
@@ -8,16 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
 import java.util.Optional;
-
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean 에 등록을 해줌. IoC를 해준다.
 @Service
 public class UserService {
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final BCryptPasswordEncoder encoder;
+
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.encoder = bCryptPasswordEncoder;
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -29,7 +29,7 @@ public class UserService {
         String password = user.getPassword();
         System.out.println("========");
         System.out.println(name + email + password);
-        String hashedPWD = bCryptPasswordEncoder.encode(password);
+        String hashedPWD = encoder.encode(password);
 
         User newUser = new User();
         newUser.setUserName(name);
@@ -41,17 +41,21 @@ public class UserService {
     }
 
     @Transactional
-    public void 회원수정(User user, int id){
-
-        Optional<User> selectedUser = userRepository.findById(id);
-        selectedUser.ifPresent((user1)->{
-            user1.setUserName(user1.getUserName());
-            user1.setEmail(user1.getEmail());
-            user1.setPassword(bCryptPasswordEncoder.encode(user1.getPassword())); // 수정시에도 비밀번호 해쉬화
-            // 해당 함수 종료시(Service 가 종료될 때) 트랜잭션이 종료된다. 이때 더티체킹 - 자동 업데이트가 됨. db flush
-//            boardRepository.save(board1); 이런거 안해줘도 됨
+    public void 회원수정(User user){
+        // 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정
+        // select 를 해서 User 오브젝트를 DB 로부터 가져오는 이유는 영속화를 하기 위해서!!
+        // 영속화된 오브젝트를 변경하면 자동으로 DB에 update 문을 날려주기 때문
+        User persistence = userRepository.findById(user.getId()).orElseThrow(()->{
+            return new IllegalArgumentException("회원찾기 실패");
         });
 
+        String rawPassword = user.getPassword();
+        String encPassword = encoder.encode(rawPassword);
+        persistence.setPassword(encPassword);
+        persistence.setEmail(user.getEmail());
+
+        // 회원수정 함수 종료 시 == 서비스 종료 시 == 트랜잭션 종료 == commit 이 자동으로 된다
+        // 영속화된 persistence 객체의 변화가 감지되면 더티체킹이 되어 변화된 것들에 대해 update 문을 날려줌.
     }
 
 }

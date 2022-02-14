@@ -33,11 +33,11 @@ public class UserApiController {
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 
-    @PutMapping("/auth/updateProc/{id}")
-    public ResponseDto<Integer> update(@RequestBody User user, @PathVariable int id){ // 이제 User 받을 수 있다!
-        System.out.println("업데이트 시작" + id);
-        userService.회원수정(user, id);
+
+    @PutMapping("/user")
+    public ResponseDto<Integer> update(@RequestBody User user){ // json 데이터를 받으려면 반드시 @RequestBody 를 써주어야 함.
+        System.out.println("업데이트 시작");                      // key=value(mime 타입이 x-www-form-urlencoded  를 받고싶다면
+        userService.회원수정(user);                              // @RequestBody 안적어도 됨
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
-
 }

@@ -36,16 +36,16 @@ let index = {
         })
     },
     update: function () {
-        var id = $("#userId").text();
+        var id = $("#id").val();
         alert(id);
         let data = {
-            "userName": $("#username").val(),
             "password": $("#password").val(),
-            "email": $("#email").val()
+            "email": $("#email").val(),
+            "id": id
         }
         $.ajax({
             type: "PUT",
-            url: "/auth/updateProc/" + id,
+            url: "/user",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
