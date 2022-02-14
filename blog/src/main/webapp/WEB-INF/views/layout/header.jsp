@@ -33,7 +33,6 @@
 <%-- 세션이 없다면!  --%>
         <c:choose>
             <c:when test="${empty principal}">
-                <script>alert(${principal})</script>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="/auth/loginForm">로그인</a></li>
                 <li class="nav-item"><a class="nav-link" href="/auth/joinForm">회원가입</a></li>
@@ -43,10 +42,12 @@
 <%-- 세션이 있다면!  --%>
             <c:otherwise>
                 <ul class="navbar-nav">
+                    회원번호: <span id="userId"><i>${principal.user.id}</i></span>
                     <li class="nav-item"><a class="nav-link" href="/board/saveForm">글쓰기</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/user/updateForm">회원정보</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/${principal.user.id}/updateForm">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
                 </ul>
+
             </c:otherwise>
         </c:choose>
 

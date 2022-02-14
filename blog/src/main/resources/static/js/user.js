@@ -36,6 +36,8 @@ let index = {
         })
     },
     update: function () {
+        var id = $("#userId").text();
+        alert(id);
         let data = {
             "userName": $("#username").val(),
             "password": $("#password").val(),
@@ -43,7 +45,7 @@ let index = {
         }
         $.ajax({
             type: "PUT",
-            url: "/auth/updateProc",
+            url: "/auth/updateProc/" + id,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"

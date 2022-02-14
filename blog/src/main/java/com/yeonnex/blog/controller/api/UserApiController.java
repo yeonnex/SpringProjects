@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.Response;
 import java.util.HashMap;
@@ -25,19 +26,18 @@ public class UserApiController {
     private UserService userService;
 
     @PostMapping("/auth/joinProc")
-    public ResponseDto<Integer> save(@RequestBody HashMap<String, String> user){
+    public ResponseDto<Integer> save(@RequestBody User user){
 
         // 실제로 DB에 insert 를 하고 리턴하면 된다!
         userService.회원가입(user);
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 
-    @PutMapping("/auth/updateProc")
-    public void update( @RequestBody User user ){ // 이제 User 받을 수 있다!
-        System.out.println("==============");
-        System.out.println(user.getUserName());
-        System.out.println(user.getEmail());
-
+    @PutMapping("/auth/updateProc/{id}")
+    public ResponseDto<Integer> update(@RequestBody User user, @PathVariable int id){ // 이제 User 받을 수 있다!
+        System.out.println("업데이트 시작" + id);
+        userService.회원수정(user, id);
+        return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 
 }

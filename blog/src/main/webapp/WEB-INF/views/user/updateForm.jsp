@@ -4,6 +4,7 @@
 <%--반드시 "상대경로" 를 적어주어야 한다--%>
 <%@ include file="../layout/header.jsp"%>
 <!-- 회원수정 폼 -->
+
 <form>
     <div class="form-group">
         <label for="username">Username:</label>
