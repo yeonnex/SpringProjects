@@ -15,8 +15,12 @@ import java.util.Optional;
 
 @Controller
 public class BoardController {
-    @Autowired
-    private BoardService boardService;
+    
+    private final BoardService boardService;
+    
+    public BoardController(BoardService boardService){
+        this.boardService = boardService;   
+    }
 
     @GetMapping("")
     public String index(Model model, @PageableDefault(size=3, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){ //컨트롤러에서 세션을 어떻게 찾는지?
