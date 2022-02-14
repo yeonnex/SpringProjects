@@ -33,6 +33,7 @@
 <%-- 세션이 없다면!  --%>
         <c:choose>
             <c:when test="${empty principal}">
+                <script>alert(${principal})</script>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="/auth/loginForm">로그인</a></li>
                 <li class="nav-item"><a class="nav-link" href="/auth/joinForm">회원가입</a></li>
