@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
 import javax.servlet.http.HttpSession;
@@ -27,14 +24,20 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-
-
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody HashMap<String, String> user){
 
         // 실제로 DB에 insert 를 하고 리턴하면 된다!
         userService.회원가입(user);
         return new ResponseDto<Integer>(HttpStatus.OK,1);
+    }
+
+    @PutMapping("/auth/updateProc")
+    public void update(@RequestBody User user){ // 이제 User 받을 수 있다!
+        System.out.println("==============");
+        System.out.println(user.getUserName());
+        System.out.println(user.getEmail());
+
     }
 
     // /auth/joinProc 을 만들지 않은 이유는,
