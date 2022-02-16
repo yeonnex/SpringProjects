@@ -4,6 +4,10 @@ import com.yeonnex.blog.model.RoleType;
 import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +22,10 @@ public class UserService {
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder){
         this.encoder = bCryptPasswordEncoder;
     }
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     @Autowired
     private UserRepository userRepository;
@@ -53,6 +61,10 @@ public class UserService {
         String encPassword = encoder.encode(rawPassword);
         persistence.setPassword(encPassword);
         persistence.setEmail(user.getEmail());
+
+        // 세션 등록
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 회원수정 함수 종료 시 == 서비스 종료 시 == 트랜잭션 종료 == commit 이 자동으로 된다
         // 영속화된 persistence 객체의 변화가 감지되면 더티체킹이 되어 변화된 것들에 대해 update 문을 날려줌.

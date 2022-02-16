@@ -41,7 +41,8 @@ let index = {
         let data = {
             "password": $("#password").val(),
             "email": $("#email").val(),
-            "id": id
+            "id": id,
+            "userName": $("#user-name").val()
         }
         $.ajax({
             type: "PUT",
