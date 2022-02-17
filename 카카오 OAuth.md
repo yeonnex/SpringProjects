@@ -29,3 +29,12 @@ client_id=37514041de77dcefe91c8b81178d8d57
 redirect_uri=http://localhost:8000/auth/kakao/callback
 code={**동적임**}
 
+### 토큰을 통한 사용자 정보 조회 (POST)
+
+GET 방식도 된다고 써있지만 POST 방식을 사용하겠다.
+
+`사용자정보조회주소` : https://kapi.kakao.com/v2/user/me
+
+헤더값
+Authorization: Bearer {ACCESS_TOKEN}
+Content-type: application/x-www-form-urlencoded;charset-utf-8
