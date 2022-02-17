@@ -16,6 +16,7 @@
 
 <%-- 이제 로그인 시 user.js 사용하지 않을 것임! 폼으로 바로 로그인할 것이다. 버튼을 누르면 폼에서 action 을 탄다!!! --%>
 <button id="btn-login" class="btn btn-primary">로그인</button>
+<a href="#"><img height="38px" src="/image/kakao_login_button.png" alt=""></a>
 </form>
 <!-- 로그인 폼 끝 -->
 <script src="/js/user.js"></script>
