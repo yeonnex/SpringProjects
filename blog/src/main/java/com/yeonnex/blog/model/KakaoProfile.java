@@ -1,16 +1,21 @@
 
 package com.yeonnex.blog.model;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
+// JSON 네이밍 전략
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Data
 public class KakaoProfile {
 
     public Integer id;
-    public String connectedAt;
+    public String connected_at; // Unrecognized field "connected_at" 에러 해결. 오타 때문이었음
     public Properties properties;
     public KakaoAccount kakaoAccount;
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     public class KakaoAccount {
 
@@ -23,6 +28,7 @@ public class KakaoProfile {
         public Boolean isEmailVerified;
         public String email;
 
+        @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
         @Data
         public class Profile {
 
@@ -35,6 +41,7 @@ public class KakaoProfile {
 
     }
 
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     public class Properties {
 
