@@ -1,7 +1,9 @@
 
 package com.yeonnex.blog.model;
 
+import lombok.Data;
 
+@Data
 public class KakaoProfile {
 
     public Integer id;
@@ -9,7 +11,8 @@ public class KakaoProfile {
     public Properties properties;
     public KakaoAccount kakaoAccount;
 
-    class KakaoAccount {
+    @Data
+    public class KakaoAccount {
 
         public Boolean profileNicknameNeedsAgreement;
         public Boolean profileImageNeedsAgreement;
@@ -20,7 +23,8 @@ public class KakaoProfile {
         public Boolean isEmailVerified;
         public String email;
 
-        class Profile {
+        @Data
+        public class Profile {
 
             public String nickname;
             public String thumbnailImageUrl;
@@ -31,7 +35,8 @@ public class KakaoProfile {
 
     }
 
-    class Properties {
+    @Data
+    public class Properties {
 
         public String nickname;
         public String profileImage;

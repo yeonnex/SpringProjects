@@ -4,6 +4,7 @@ package com.yeonnex.blog.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yeonnex.blog.model.KakaoProfile;
 import com.yeonnex.blog.model.OAuthToken;
 import com.yeonnex.blog.service.UserService;
 import org.springframework.http.HttpEntity;
@@ -98,6 +99,18 @@ public class UserController {
                 kakaoProfileRequest2,
                 String.class // 반환타입
         );
+
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+        try {
+            kakaoProfile = objectMapper.readValue(response2.getBody(), KakaoProfile.class);
+        }catch (JsonMappingException e){
+            e.printStackTrace();
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        System.out.println("카카오 아이디: " + kakaoProfile.getId());
+        System.out.println("카카오 이메일: " + kakaoProfile.getKakaoAccount().getEmail());
         return response2.getBody(); // 코드값을 받았기 때문에 일단 "인증" 은 완료됨!
         // 이 인증된 코드를 통해, "엑세스 토큰을 받아야 한다". 이유는 카카오 리스소 서버에 등록된 개인정보를 응답받기 위해서이다. 개인정보에 접근하기 위해 토큰이 필요하다!
     }
