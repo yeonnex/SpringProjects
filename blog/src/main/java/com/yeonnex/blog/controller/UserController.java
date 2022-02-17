@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yeonnex.blog.model.KakaoProfile;
 import com.yeonnex.blog.model.OAuthToken;
+import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,12 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.UUID;
+
 // 인증이 안된 사용자들이 출입할 수 있는 경로를 /auth/** 허용
 // 그냥 주소가 / 이면 index.jsp 허용
 // static 이하에 있는 /js/**, /css/**, /image/** 허용
 
 @Controller
 public class UserController {
+
+    @Autowired UserService userService;
 
     @GetMapping("/auth/joinForm")
     public String joinForm(){
@@ -109,9 +115,23 @@ public class UserController {
         }catch (JsonProcessingException e){
             e.printStackTrace();
         }
+
+        // User 오브젝트: username, password, email
         System.out.println("카카오 아이디: " + kakaoProfile.getId());
         System.out.println("카카오 이메일: " + kakaoProfile.getKakaoAccount().getEmail());
-        return response2.getBody(); // 코드값을 받았기 때문에 일단 "인증" 은 완료됨!
+
+        System.out.println("블로그서버 유저네임: " + kakaoProfile.getKakaoAccount().getEmail()+ "_" + kakaoProfile.getId());
+        System.out.println("블로그서버 이메일: " + kakaoProfile.getKakaoAccount().getEmail());
+
+        UUID garbagePassword = UUID.randomUUID(); // 임시 패스워드 (쓰레기)
+        System.out.println("블로그서버 패스워드: " + garbagePassword);
+
+        // 이제 강제로 회원 가입을 시켜줄 것이다!
+        User user = User.builder().userName(kakaoProfile.getKakaoAccount().getEmail()+ "_" + kakaoProfile.getId())
+                        .email(kakaoProfile.getKakaoAccount().getEmail())
+                                .password(garbagePassword.toString()).build();
+        userService.회원가입(user);
+        return "회원가입 완료"; // 코드값을 받았기 때문에 일단 "인증" 은 완료됨!
         // 이 인증된 코드를 통해, "엑세스 토큰을 받아야 한다". 이유는 카카오 리스소 서버에 등록된 개인정보를 응답받기 위해서이다. 개인정보에 접근하기 위해 토큰이 필요하다!
     }
 
