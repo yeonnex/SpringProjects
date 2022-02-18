@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
-        <input value="${principal.user.email}" type="email" class="form-control" placeholder="Enter email" id="email">
+        <input value="${principal.user.email}" type="email" class="form-control" placeholder="Enter email" id="email" readonly>
     </div>
     <c:if test="${empty principal.user.oauth}">
         <div class="form-group">

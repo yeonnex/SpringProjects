@@ -56,10 +56,13 @@ public class UserService {
             return new IllegalArgumentException("회원찾기 실패");
         });
 
-        String rawPassword = user.getPassword();
-        String encPassword = encoder.encode(rawPassword);
-        persistence.setPassword(encPassword);
-        persistence.setEmail(user.getEmail());
+        // Validate 체크. 즉 oauth 에 값이 없는 사람만 이메일과 패스워드 수정할 수 있음
+        if(persistence.getOauth() == null || persistence.getOauth().equals("")){
+            String rawPassword = user.getPassword();
+            String encPassword = encoder.encode(rawPassword);
+            persistence.setPassword(encPassword);
+            persistence.setEmail(user.getEmail());
+        }
 
         // 세션 등록
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
