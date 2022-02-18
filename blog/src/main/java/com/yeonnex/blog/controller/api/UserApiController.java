@@ -41,8 +41,6 @@ public class UserApiController {
         System.out.println("업데이트 시작");                      // key=value(mime 타입이 x-www-form-urlencoded  를 받고싶다면
         userService.회원수정(user);
 
-
-
         return new ResponseDto<Integer>(HttpStatus.OK,1);
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean 에 등록을 해줌. IoC를 해준다.
 @Service
@@ -68,6 +67,17 @@ public class UserService {
 
         // 회원수정 함수 종료 시 == 서비스 종료 시 == 트랜잭션 종료 == commit 이 자동으로 된다
         // 영속화된 persistence 객체의 변화가 감지되면 더티체킹이 되어 변화된 것들에 대해 update 문을 날려줌.
+    }
+
+    @Transactional
+    public boolean 회원찾기(User user){
+        if (userRepository.findByUserName(user.getUserName()).isPresent()){
+            System.out.println("회원존재!");
+            return true;
+        }
+        System.out.println("존재하지않음!");
+
+        return false;
     }
 
 }

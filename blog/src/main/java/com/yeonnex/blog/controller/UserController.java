@@ -9,10 +9,15 @@ import com.yeonnex.blog.model.OAuthToken;
 import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -32,6 +37,12 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
+    // 이 키는 외부에 노출되면 안됨
+    @Value("${yeonnex.key}")
+    private String yeonnexKey;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Autowired UserService userService;
 
     @GetMapping("/auth/joinForm")
@@ -45,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/auth/kakao/callback")
-    public @ResponseBody String kakaoCallback(@RequestParam String code){ // 반환값이 @ResponseBody 이므로, 데이터를 리턴해주게 된다
+    public String kakaoCallback(@RequestParam String code){ // 반환값이 @ResponseBody 이므로, 데이터를 리턴해주게 된다
         System.out.println("=====코드 출력=====" + code);
         // RestTemplate 라는 라이브러리를 사용하면, http 요청이 매우 쉬워진다.(이외에도 Retrofit2, OkHttp 등이 있음)
         // POST 방식으로 key=value 데이터를 요청(카카오쪽으로)
@@ -130,9 +141,21 @@ public class UserController {
         User user = User.builder().userName(kakaoProfile.getKakaoAccount().getEmail()+ "_" + kakaoProfile.getId())
                         .email(kakaoProfile.getKakaoAccount().getEmail())
                                 .password(garbagePassword.toString()).build();
+        // 가입자 혹은 비가입자 체크해서 처리
+        if(userService.회원찾기(user)){ // 이미 회원 가입이 되어있다면
+            System.out.println("===이미 가입됨===");
+            System.out.println(yeonnexKey);
+            return "index";
+        }
+
+        // 처음 회원가입하는 사람이라면 회원가입 시킴
         userService.회원가입(user);
-        return "회원가입 완료"; // 코드값을 받았기 때문에 일단 "인증" 은 완료됨!
-        // 이 인증된 코드를 통해, "엑세스 토큰을 받아야 한다". 이유는 카카오 리스소 서버에 등록된 개인정보를 응답받기 위해서이다. 개인정보에 접근하기 위해 토큰이 필요하다!
+
+        // 로그인처리
+        // 세션 등록
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+       return "index";
     }
 
     @GetMapping("/user/{id}/updateForm")
