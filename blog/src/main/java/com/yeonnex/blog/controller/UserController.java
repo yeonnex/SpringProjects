@@ -134,28 +134,32 @@ public class UserController {
         System.out.println("블로그서버 유저네임: " + kakaoProfile.getKakaoAccount().getEmail()+ "_" + kakaoProfile.getId());
         System.out.println("블로그서버 이메일: " + kakaoProfile.getKakaoAccount().getEmail());
 
-        UUID garbagePassword = UUID.randomUUID(); // 임시 패스워드 (쓰레기)
-        System.out.println("블로그서버 패스워드: " + garbagePassword);
+        // UUID 란 -> 중복되지 않는 어떤 특정 값을 만들어내는 알고리즘. UUID 로 강제로 패스워드 만들면, 매번 바뀌기 때문에
+        // 비교검사를 할수가 없어서 내가 만든 yeonnexKey 를 패스워드로 그냥 집어넣겠다.
+//        UUID garbagePassword = UUID.randomUUID(); // 임시 패스워드 (쓰레기)
+        System.out.println("블로그서버 패스워드: " + yeonnexKey);
 
         // 이제 강제로 회원 가입을 시켜줄 것이다!
         User user = User.builder().userName(kakaoProfile.getKakaoAccount().getEmail()+ "_" + kakaoProfile.getId())
                         .email(kakaoProfile.getKakaoAccount().getEmail())
-                                .password(garbagePassword.toString()).build();
+                        .oauth("kakao")
+                        .password(yeonnexKey).build();
+        System.out.println("오어쓰 출력");
+        System.out.println(user.getOauth());
         // 가입자 혹은 비가입자 체크해서 처리
-        if(userService.회원찾기(user)){ // 이미 회원 가입이 되어있다면
-            System.out.println("===이미 가입됨===");
-            System.out.println(yeonnexKey);
-            return "index";
+        if(!userService.회원찾기(user)){ // 이미 회원 가입이 되어있지 않다면
+            System.out.println("기존 회원이 아니기에 회원가입을 진행합니다");
+            userService.회원가입(user);
         }
 
-        // 처음 회원가입하는 사람이라면 회원가입 시킴
-        userService.회원가입(user);
+        System.out.println("자동 로그인을 진행합니다");
 
         // 로그인처리
         // 세션 등록
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), yeonnexKey));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-       return "index";
+
+        return "index";
     }
 
     @GetMapping("/user/{id}/updateForm")

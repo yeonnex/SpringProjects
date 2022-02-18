@@ -35,6 +35,9 @@ public class User {
     @Enumerated(EnumType.STRING) // DB는 RoleType 이라는 타입이 없다
     private RoleType role; // Enum 으로 나중에 수정하자 // admin, user, manager
 
+    @Column
+    private String oauth;
+
     @CreationTimestamp // 시간이 자동 입력. 나중에 데이터 생성할 때 id 값처럼 굳이 넣지 않아도 자동생성 예정
     private Timestamp createDate;
 }

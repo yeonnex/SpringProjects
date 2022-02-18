@@ -43,7 +43,7 @@ public class UserService {
         newUser.setEmail(email);
         newUser.setPassword(hashedPWD);
         newUser.setRole(RoleType.USER);
-
+        newUser.setOauth(user.getOauth());
         userRepository.save(newUser);
     }
 

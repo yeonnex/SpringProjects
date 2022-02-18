@@ -16,11 +16,12 @@
         <label for="email">Email:</label>
         <input value="${principal.user.email}" type="email" class="form-control" placeholder="Enter email" id="email">
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" placeholder="Enter password" id="password">
-    </div>
-
+    <c:if test="${empty principal.user.oauth}">
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" placeholder="Enter password" id="password">
+        </div>
+    </c:if>
 </form>
 <button id="btn-update" class="btn btn-primary">회원수정완료</button>
 <!-- 회원수정 폼 끝 -->
