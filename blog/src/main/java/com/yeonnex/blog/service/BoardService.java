@@ -7,6 +7,7 @@ import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.repository.BoardRepository;
 import com.yeonnex.blog.repository.ReplyRepository;
 import com.yeonnex.blog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BoardService {
-    @Autowired
-    BoardRepository boardRepository;
-
-    @Autowired
-    ReplyRepository replyRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
+    private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
+//    public BoardService(BoardRepository bRepo, ReplyRepository rRepo){
+//        this.boardRepository = bRepo;
+//        this.replyRepository = rRepo;
+//    }
     @Transactional
     public void 글쓰기(Board board, User user){
         String title = board.getTitle();
