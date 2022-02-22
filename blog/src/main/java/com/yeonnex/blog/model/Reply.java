@@ -34,4 +34,15 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createDate;
+
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", board=" + board +
+                ", createDate=" + createDate +
+                '}';
+    }
 }
