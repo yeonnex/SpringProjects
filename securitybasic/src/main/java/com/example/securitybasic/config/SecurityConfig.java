@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll() // 다른 요청들은 모두 허용하겠슴!
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/loginForm");
 
     }
 }
