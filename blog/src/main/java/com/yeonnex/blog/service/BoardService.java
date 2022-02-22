@@ -78,4 +78,10 @@ public class BoardService {
         System.out.println("BoardService - 댓글 쓰기 (업데이트된 행의 수): " + result);
 
     }
+
+    @Transactional
+    public void 댓글삭제(int id){
+        System.out.println("댓글 삭제중 ... ");
+        replyRepository.deleteById(id);
+    }
 }

@@ -59,6 +59,12 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
 
+    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+    public ResponseDto<Integer> replyDelete(@PathVariable int replyId){
+        System.out.println("댓삭");
+        boardService.댓글삭제(replyId);
+        return new ResponseDto<Integer>(HttpStatus.OK, 1);
+    }
     // /auth/joinProc 을 만들지 않은 이유는,
     // 스프링 시큐리티가 이 요청을 가로채가게 하기 위해서이다
 }

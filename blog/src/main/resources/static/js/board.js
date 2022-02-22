@@ -115,6 +115,19 @@ let index = {
             // 실패면 여기 실행
             alert("댓글 작성에 실패하였습니다");
         }) // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청!!
+    },
+
+    replyDelete: function (boardId, replyId) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`,
+        }).done(function (resp) {
+            alert("댓글삭제성공");
+            location.href = `/board/${boardId}`
+        }).fail(function (error) {
+            alert(`api/board/${boardId}/reply/${replyId}` + "댓삭실패")
+            alert(JSON.stringify(error));
+        })
     }
 
 
