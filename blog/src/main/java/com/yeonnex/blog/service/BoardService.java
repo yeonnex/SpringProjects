@@ -74,20 +74,9 @@ public class BoardService {
 
     @Transactional
     public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto){
-        System.out.println(replySaveRequestDto);
-        System.out.println("댓글쓰기 서비스 시작!");
-        Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()->{
-            return new IllegalArgumentException("댓글쓰기 실패: 게시글 아이디를 찾을 수 없습니다");
-        }); // 영속화 완료
 
-        User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()->{
-            return new IllegalArgumentException("댓글쓰기 실패: 유저를 찾을 수 없음");
-        }); // 영속화 완료
+        int result = replyRepository.mSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+        System.out.println("BoardService - 댓글 쓰기 (업데이트된 행의 수): " + result);
 
-        Reply reply = Reply.builder()
-                        .user(user)
-                                .board(board)
-                                        .content(replySaveRequestDto.getContent()).build();
-       replyRepository.save(reply);
     }
 }
