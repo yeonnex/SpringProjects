@@ -40,6 +40,7 @@ public class Board {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 가 있다는 건, "난 FK가 아니예요!" 라는 뜻. 그러니 "DB에 reply 컬럼을 만들지 마세요!"
     @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
     private List<Reply> replys;                                 // 난 그냥 Board 를 select 할 때 join 문을 통해 데이터를 들고만 와주기 위해 필요한 겁니다.
 
 
