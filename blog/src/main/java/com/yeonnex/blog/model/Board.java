@@ -38,7 +38,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.EAGER) // 한명의 유저만 존재하기 때문에, 데이터 가지고 올 때, 패치타입을 EAGER 로 설정
     private User user; // DB는 오브젝트를 저장할 수 없다. FK로 저장해야함. 자바는 오브젝트를 저장할 수 있다
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 가 있다는 건, "난 FK가 아니예요!" 라는 뜻. 그러니 "DB에 reply 컬럼을 만들지 마세요!"
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // mappedBy 가 있다는 건, "난 FK가 아니예요!" 라는 뜻. 그러니 "DB에 reply 컬럼을 만들지 마세요!"
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")
     private List<Reply> replys;                                 // 난 그냥 Board 를 select 할 때 join 문을 통해 데이터를 들고만 와주기 위해 필요한 겁니다.
