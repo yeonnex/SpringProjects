@@ -4,11 +4,13 @@ import com.sun.media.jfxmediaimpl.HostUtils;
 import com.yeonnex.blog.config.auth.PrincipalDetail;
 import com.yeonnex.blog.dto.ResponseDto;
 import com.yeonnex.blog.model.Board;
+import com.yeonnex.blog.model.Reply;
 import com.yeonnex.blog.service.BoardService;
 import com.yeonnex.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.json.GsonTester;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +44,13 @@ public class BoardApiController {
     public ResponseDto<Integer> delete(@PathVariable int id){
         System.out.println("글 삭제 api 호출");
         boardService.글삭제하기(id);
+        return new ResponseDto<Integer>(HttpStatus.OK, 1);
+    }
+
+    @PostMapping("/api/board/{boardId}/reply")
+    public ResponseDto<Integer> replySave(@RequestBody Reply reply, @PathVariable int boardId, @AuthenticationPrincipal PrincipalDetail principal){
+        System.out.println("댓글쓰기 서비스 시작");
+        boardService.댓글쓰기(principal.getUser(), boardId, reply);
         return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
 

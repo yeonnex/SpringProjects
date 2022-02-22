@@ -1,8 +1,10 @@
 package com.yeonnex.blog.service;
 
 import com.yeonnex.blog.model.Board;
+import com.yeonnex.blog.model.Reply;
 import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.repository.BoardRepository;
+import com.yeonnex.blog.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class BoardService {
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    ReplyRepository replyRepository;
 
     @Transactional
     public void 글쓰기(Board board, User user){
@@ -60,5 +65,17 @@ public class BoardService {
             // 해당 함수 종료시(Service 가 종료될 때) 트랜잭션이 종료된다. 이때 더티체킹 - 자동 업데이트가 됨. db flush
 //            boardRepository.save(board1); 이거 안해줘도 됨
         });
+    }
+
+    @Transactional
+    public void 댓글쓰기(User user,int boardId, Reply requestReply){
+        System.out.println("댓글쓰기 서비스 시작!");
+        Board board = boardRepository.findById(boardId).orElseThrow(()->{
+            return new IllegalArgumentException("댓글쓰기 실패: 게시글 아이디를 찾을 수 없습니다");
+        }); // 영속화 완료
+        requestReply.setUser(user);
+        requestReply.setBoard(board);
+
+        replyRepository.save(requestReply);
     }
 }

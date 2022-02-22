@@ -12,7 +12,7 @@
     <hr/>
 
     <div>
-        글번호: <span id="writeId"><i>${board.id} </i></span>
+        글번호: <span id="writeId"><i>${board.id}</i></span>
         작성자: <span id="name"><i>${board.user.userName} </i></span>
     </div>
     <div>
@@ -25,8 +25,9 @@
 
 
     <div class="card">
-        <div class="card-body"><textarea id ="reply-text" class="form-control"></textarea></div>
-        <div class="card-footer"><button id="btn-reply-register"class="btn btn-primary">등록</button></div>
+            <input type="hidden" id="boardId" value="${board.id}">
+            <div class="card-body"><textarea id ="reply-content" class="form-control"></textarea></div>
+            <div class="card-footer"><button type="button" id="btn-reply-save"class="btn btn-primary">등록</button></div>
     </div>
     <br/>
 <%-- 제이쿼리나 부트스트랩이 쓰고 있는 id 와 겹칠수도 있기 때문에  --%>

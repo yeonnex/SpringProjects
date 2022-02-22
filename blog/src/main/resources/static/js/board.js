@@ -9,6 +9,9 @@ let index = {
         });
         $("#btn-update").on("click", ()=>{
             this.updateById();
+        });
+        $("#btn-reply-save").on("click", ()=>{
+            this.replySave();
         })
 
     },
@@ -80,6 +83,32 @@ let index = {
             // 실패면 여기 실행
             alert("수정이 실패!");
         })
+    },
+    replySave: function () {
+        let data = {
+            content: $("#reply-content").val()
+        }
+        let boardId = $("#boardId").val()
+        console.log(data.content);
+        console.log("보드 아이디")
+        console.log(boardId);
+
+        // ajax 호출시 default 가 비동기 호출출
+        $.ajax({
+            // 어떤 통신 수행(회원 가입 수행 요청)
+            type: "POST",
+            url: `/api/board/${boardId}/reply`,
+            data: JSON.stringify(data), // http body 데이터
+            contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
+            dataType: "json" // 요청을 서버로 해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json 이라면) => javascript 오브젝트로 바꿔줌
+        }).done(function (resp) {
+            // 정상이면 여기 실행
+            alert("댓글 작성이 완료되었습니다");
+            location.href = `/board/${boardId}`;
+        }).fail(function (error){
+            // 실패면 여기 실행
+            alert("댓글 작성에 실패하였습니다");
+        }) // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청!!
     }
 
 
