@@ -1,10 +1,12 @@
 package com.yeonnex.blog.model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yeonnex.blog.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -37,8 +39,9 @@ public class Board {
     private User user; // DB는 오브젝트를 저장할 수 없다. FK로 저장해야함. 자바는 오브젝트를 저장할 수 있다
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 가 있다는 건, "난 FK가 아니예요!" 라는 뜻. 그러니 "DB에 reply 컬럼을 만들지 마세요!"
-    // 난 그냥 Board 를 select 할 때 join 문을 통해 데이터를 들고만 와주기 위해 필요한 겁니다.
-    private List<Reply> reply;
+    @JsonIgnoreProperties({"board"})
+    private List<Reply> replys;                                 // 난 그냥 Board 를 select 할 때 join 문을 통해 데이터를 들고만 와주기 위해 필요한 겁니다.
+
 
     @CreationTimestamp // insert 될때 자동으로
     private Timestamp createDate;
