@@ -44,7 +44,7 @@
 <%-- 세션이 있다면!  --%>
             <c:otherwise>
                 <ul class="navbar-nav">
-                    회원번호: <span id="userId"><i>${principal.user.id}</i></span>
+<%-- id 를 중복해서 주면 절대 안됨 😥 회원번호: <span id="userId"><i>${principal.user.id}</i></span>--%>
                     <li class="nav-item"><a class="nav-link" href="/board/saveForm">글쓰기</a></li>
                     <li class="nav-item"><a class="nav-link" href="/user/${principal.user.id}/updateForm">회원정보</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>

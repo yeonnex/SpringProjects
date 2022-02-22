@@ -25,9 +25,16 @@
 
 
     <div class="card">
-            <input type="hidden" id="boardId" value="${board.id}">
-            <div class="card-body"><textarea id ="reply-content" class="form-control"></textarea></div>
-            <div class="card-footer"><button type="button" id="btn-reply-save"class="btn btn-primary">등록</button></div>
+        <form>
+            <input type="hidden" id="userId" value="${board.user.id}"/>
+            <input type="hidden" id="boardId" value="${board.id}"/>
+            <div class="card-body">
+                <textarea id ="reply-content" class="form-control"></textarea>
+            </div>
+            <div class="card-footer">
+                <button type="button" id="btn-reply-save"class="btn btn-primary">등록</button>
+            </div>
+        </form>
     </div>
     <br/>
 <%-- 제이쿼리나 부트스트랩이 쓰고 있는 id 와 겹칠수도 있기 때문에  --%>

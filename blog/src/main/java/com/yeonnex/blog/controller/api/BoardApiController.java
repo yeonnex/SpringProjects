@@ -2,6 +2,7 @@ package com.yeonnex.blog.controller.api;
 
 import com.sun.media.jfxmediaimpl.HostUtils;
 import com.yeonnex.blog.config.auth.PrincipalDetail;
+import com.yeonnex.blog.dto.ReplySaveRequestDto;
 import com.yeonnex.blog.dto.ResponseDto;
 import com.yeonnex.blog.model.Board;
 import com.yeonnex.blog.model.Reply;
@@ -47,10 +48,14 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
 
+
+    // 데이터를 받을 때 컨트롤러에서 dto 를 만들어서 받는게 좋다
+    // dto 를 사용하지 않은 이유는! 이건 그냥 조그마한 공부용 플젝이었기 때문
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<Integer> replySave(@RequestBody Reply reply, @PathVariable int boardId, @AuthenticationPrincipal PrincipalDetail principal){
-        System.out.println("댓글쓰기 서비스 시작");
-        boardService.댓글쓰기(principal.getUser(), boardId, reply);
+    public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){
+        System.out.println("====");
+        System.out.println(replySaveRequestDto);
+        boardService.댓글쓰기(replySaveRequestDto);
         return new ResponseDto<Integer>(HttpStatus.OK, 1);
     }
 

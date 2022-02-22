@@ -1,10 +1,12 @@
 package com.yeonnex.blog.service;
 
+import com.yeonnex.blog.dto.ReplySaveRequestDto;
 import com.yeonnex.blog.model.Board;
 import com.yeonnex.blog.model.Reply;
 import com.yeonnex.blog.model.User;
 import com.yeonnex.blog.repository.BoardRepository;
 import com.yeonnex.blog.repository.ReplyRepository;
+import com.yeonnex.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,9 @@ public class BoardService {
 
     @Autowired
     ReplyRepository replyRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Transactional
     public void 글쓰기(Board board, User user){
@@ -68,14 +73,21 @@ public class BoardService {
     }
 
     @Transactional
-    public void 댓글쓰기(User user,int boardId, Reply requestReply){
+    public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto){
+        System.out.println(replySaveRequestDto);
         System.out.println("댓글쓰기 서비스 시작!");
-        Board board = boardRepository.findById(boardId).orElseThrow(()->{
+        Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()->{
             return new IllegalArgumentException("댓글쓰기 실패: 게시글 아이디를 찾을 수 없습니다");
         }); // 영속화 완료
-        requestReply.setUser(user);
-        requestReply.setBoard(board);
 
-        replyRepository.save(requestReply);
+        User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()->{
+            return new IllegalArgumentException("댓글쓰기 실패: 유저를 찾을 수 없음");
+        }); // 영속화 완료
+
+        Reply reply = Reply.builder()
+                        .user(user)
+                                .board(board)
+                                        .content(replySaveRequestDto.getContent()).build();
+       replyRepository.save(reply);
     }
 }
