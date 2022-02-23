@@ -15,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
+// 이 객체는 나중에 new 로 메모리에 띄울 것임
 public class PrincipalDetails implements UserDetails {
 
     private User user; // 컴포지션
