@@ -29,3 +29,14 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate.format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 428834061816-qnercs6b7a9jr4ihboacim4cn4gmt4o3.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+            - email
+            - profile
