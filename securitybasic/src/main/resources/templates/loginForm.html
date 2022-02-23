@@ -7,7 +7,8 @@
 <body>
 <h1>로그인 페이지</h1>
 <hr/>
-<form>
+<!-- /login 주소 요청시 시큐리티가 낚아챌 것! -->
+<form action="/login" method="post">
     <input type="text" name="username" placeholder="Username"/><br/>
     <input type="password" name="password" placeholder="Password"/><br/>
     <button>로그인</button>
