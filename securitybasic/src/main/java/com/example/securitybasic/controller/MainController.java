@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +41,19 @@ public class MainController {
         return "세션정보 확인하기";
     }
 
+    @GetMapping("/test/oauth/login")
+    public @ResponseBody String testOAuthLogin(Authentication authentication,
+                                               @AuthenticationPrincipal OAuth2User oauth){
+        System.out.println("/test/oauth/login =============");
+        System.out.println("authentication: " + authentication.getPrincipal());
+
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal(); // 리턴 타입이 Object 이기 때문에 다운캐스팅
+        System.out.println("authentication user: " + oAuth2User.getAttributes());
+
+        System.out.println("oauth2User: " + oauth.getAttributes());
+        return "OAuth 세션정보 확인하기";
+    }
+
     @GetMapping({"", "/"})
     public String index(){
         // mustache 기본 폴더 src/main/resources/
@@ -48,7 +62,7 @@ public class MainController {
     }
 
     @GetMapping("/user")
-    public @ResponseBody String user(){
+    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails){
         return "user";
     }
 
