@@ -10,6 +10,7 @@ package com.example.securitybasic.config.auth;
 
 
 import com.example.securitybasic.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +19,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 // 이 객체는 나중에 new 로 메모리에 띄울 것임
+@Data
 public class PrincipalDetails implements UserDetails {
 
     private User user; // 컴포지션

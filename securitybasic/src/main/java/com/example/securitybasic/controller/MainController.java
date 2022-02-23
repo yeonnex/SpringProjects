@@ -1,10 +1,12 @@
 package com.example.securitybasic.controller;
 
+import com.example.securitybasic.config.auth.PrincipalDetails;
 import com.example.securitybasic.model.User;
 import com.example.securitybasic.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,18 @@ public class MainController {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    // localhost:8080/
-    // localhost:8080
+    @GetMapping("/test/login")
+    public @ResponseBody String testLogin(Authentication authentication){
+        System.out.println("/test/login =============");
+        System.out.println("authentication: " + authentication.getPrincipal());
+        // authentication: com.example.securitybasic.config.auth.PrincipalDetails@410fa756
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal(); // 리턴 타입이 Object 이기 때문에 다운캐스팅
+        System.out.println("authentication user: " + principalDetails.getUser());
+        // authentication user: User(id=1, username=yks, password=$2a$10$6m9m5SnKKbw904bL//pMOOwiIeAIjjwuy/cgZxnM8KSur/tq6W.ly, email=hepi@naver.com, role=ROLE_USER, provider=null, providerId=null, createDate=2022-02-23 10:43:23.0)
+        return "세션정보 확인하기";
+    }
+
     @GetMapping({"", "/"})
     public String index(){
         // mustache 기본 폴더 src/main/resources/
