@@ -3,6 +3,7 @@ package com.example.securitybasic.config.oauth;
 import com.example.securitybasic.config.auth.PrincipalDetails;
 import com.example.securitybasic.config.oauth.provider.FacebookUserInfo;
 import com.example.securitybasic.config.oauth.provider.GoogleUserInfo;
+import com.example.securitybasic.config.oauth.provider.NaverUserInfo;
 import com.example.securitybasic.config.oauth.provider.OAuth2UserInfo;
 import com.example.securitybasic.model.User;
 import com.example.securitybasic.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 
 @Service
@@ -51,8 +54,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("페이스북 로그인을 진행할것임!!!");
             oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
 
-        }else{
-            System.out.println("아직 구글과 페이스북 로그인밖에 지원 안해요 😥");
+        }else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")){
+            System.out.println("네이버 로그인을 진행할것임!!!");
+            oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+        }
+
+        else{
+            System.out.println("아직 구글과 페이스북, 네이버 로그인밖에 지원 안해요 😥");
         }
         String provider = oAuth2UserInfo.getProvider(); // google
         String providerId = oAuth2UserInfo.getProviderId();
