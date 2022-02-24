@@ -61,8 +61,11 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/user")
+    // OAuth 로그인을 해도 PrincipalDetails 타입으로 받을 수 있고,
+    // 일반 로그인을 해도 PrincipalDetails 로도 받을 수 있음
+   @GetMapping("/user")
     public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println("principalDetails: " + principalDetails.getUser());
         return "user";
     }
 
