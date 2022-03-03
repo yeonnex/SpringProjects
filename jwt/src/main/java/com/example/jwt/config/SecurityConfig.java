@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(corsFilter) // 이 필터를 설정함으로써 내 서버는 cors 정책에서 벗어날 수 있게 되었다. cross-origin 요청이 와도, 다 허용됨!
                 .formLogin().disable() // 왜냐, jwt 서버니까 id,비번 폼 로그인을 하지 않음!
-                .httpBasic().disable()
+                .httpBasic().disable() // Authorization 에 http basic 방식을 쓰지 않고, http bearer 방식을 쓸 것이다
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
