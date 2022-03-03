@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);
         /**
-         * Tip. 구글 로그인이 완료되면, 코드를 받는 것이 아니라,
+         * Tip. 구글 로그인이 완료되면, 코드를 받는 것이 아니라,(원래는 코드를 먼저 받아야 하는데)
          * 액세스토큰 + 사용자 프로필 정보를 한방에 받는다.
          * 그래서 oauth client 라이브러리가 매우 편리하다는 것!
          */

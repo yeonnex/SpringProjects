@@ -9,9 +9,9 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    // 얘를 이렇게 적어놓는것만으로는 의미가 없고, 필터에 등록을 해줘야한다
+    // 얘를 이렇게 적어놓는것만으로는 의미가 없고, "필터에 등록"을 해줘야한다
    @Bean
-    public CorsFilter corsFilter(){
+    public CorsFilter corsFilter(){ // 스프링 프레임워크가 들고있는 CorsFilter 여야 한다.
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
@@ -20,7 +20,7 @@ public class CorsConfig {
         config.addAllowedHeader("*"); // 모든 header 에 응답을 허용하곘다
         config.addAllowedMethod("*"); // 모든 post, get, put, delete, patch 요청을 허용하겠다
 
-        source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/api/**", config); // /api/** 로 들어오는 모든 주소는 이 config 설정을 따르라!
 
         return new CorsFilter(source);
     }
