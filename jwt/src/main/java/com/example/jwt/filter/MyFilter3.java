@@ -27,7 +27,6 @@ public class MyFilter3 implements Filter {
             System.out.println("POST 요청됨");
             String headerAuth = req.getHeader("Authorization");
             System.out.println(headerAuth);
-            System.out.println("필터1");
             if(headerAuth.equals("cors")){ // 토큰이 "cors" 일때만 필터를 타게하겠음!
                 filterChain.doFilter(req,res); // 다운캐스팅한 애를 chain 에 넘겨주겠음!
             }else{
@@ -37,6 +36,6 @@ public class MyFilter3 implements Filter {
             }
         }
 
-        filterChain.doFilter(servletRequest,servletResponse);
+//        filterChain.doFilter(req,res);
     }
 }
