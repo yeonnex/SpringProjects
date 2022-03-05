@@ -12,6 +12,7 @@ public class JwtApplication {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(JwtApplication.class, args);
     }
