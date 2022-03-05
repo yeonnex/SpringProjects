@@ -1,5 +1,7 @@
 package com.example.jwt.config.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.example.jwt.config.auth.PrincipalDetails;
 import com.example.jwt.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * 안드로이드에서 로그인시도 할수도, 리액트에서 로그인시도 할 수도, 일반적인 웹 클라이언트에서 로그인 시도 할 수도.
@@ -84,7 +87,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
         System.out.println("successfulAuthenticaion 실행됨: 인증완료!!!");
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+        // RSA 방식 아니고, Hash 암호화 방식
+        // RSA 방식은 공개키와 개인키를 기반으로 돌아가고,
+        // HMAC 은 시크릿 키가 있어야 함
+       String jwtToken = JWT.create()
+                .withSubject("cos토큰")
+                .withExpiresAt(new Date(System.currentTimeMillis()+ (60000*10))) // 토큰이 만료되는 시간은 10분
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("username", principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512("cos"));
+        System.out.println("jwtToken 출력" + jwtToken);
+       response.addHeader("Authorization", "Bearer "+jwtToken);
     }
 }
