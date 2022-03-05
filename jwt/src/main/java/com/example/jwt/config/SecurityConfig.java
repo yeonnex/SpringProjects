@@ -1,8 +1,10 @@
 package com.example.jwt.config;
 
 import com.example.jwt.config.jwt.JwtAuthenticationFilter;
+import com.example.jwt.config.jwt.JwtAuthorizationFilter;
 import com.example.jwt.filter.MyFilter1;
 import com.example.jwt.filter.MyFilter3;
+import com.example.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +20,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter; // 모든 요청이 이 필터를 타게 되어있음. 이게 걸려있는 한, cors 요청이 와도 다 허용됨!
-
+    private final UserRepository userRepository;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(new MyFilter3(), BasicAuthenticationFilter.class); //근데 이런걸 굳이 시큐리티 필터에 넣어줄 필요 없지! 그냥 테스트용
@@ -29,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable() // 왜냐, jwt 서버니까 id,비번 폼 로그인을 하지 않음!
                 .httpBasic().disable() // Authorization 에 http basic 방식을 쓰지 않고, http bearer 방식을 쓸 것이다
                 .addFilter(new JwtAuthenticationFilter(authenticationManager())) // 꼭 전달해야 하는 파라미터가 있는데, 바로 AuthenticationManager. 애를 통해서 로그인을 진행햐기 때문
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository)) // 필터 등록!
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
