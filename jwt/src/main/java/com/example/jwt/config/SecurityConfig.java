@@ -1,5 +1,6 @@
 package com.example.jwt.config;
 
+import com.example.jwt.config.jwt.JwtAuthenticationFilter;
 import com.example.jwt.filter.MyFilter1;
 import com.example.jwt.filter.MyFilter3;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter) // 이 필터를 설정함으로써 내 서버는 cors 정책에서 벗어날 수 있게 되었다. cross-origin 요청이 와도, 다 허용됨!
                 .formLogin().disable() // 왜냐, jwt 서버니까 id,비번 폼 로그인을 하지 않음!
                 .httpBasic().disable() // Authorization 에 http basic 방식을 쓰지 않고, http bearer 방식을 쓸 것이다
+                .addFilter(new JwtAuthenticationFilter(authenticationManager())) // 꼭 전달해야 하는 파라미터가 있는데, 바로 AuthenticationManager. 애를 통해서 로그인을 진행햐기 때문
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
